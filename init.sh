@@ -1,8 +1,39 @@
 #!/bin/bash
-set -uxo pipefail
+# set -uxo pipefail
+set -uo pipefail
+
+contains_forward_slash() {
+    local string="$1"
+
+    if [[ $string == *"/"* ]]; then
+        echo "true"
+    else
+        echo "false"
+    fi
+}
+
+if [ $(contains_forward_slash "$DB_KEY_ENCRYPTION_PASSWORD") == "true" ]; then
+    echo "Error: DB_KEY_ENCRYPTION_PASSWORD cannot contain forward slash (/)"
+    kill -9 $(ps aux | grep 'sqlservr' | awk '{print $2}')
+    exit -1;
+elif [ $(contains_forward_slash "$DB_NAME") == "true" ]; then
+    echo "Error: DB_NAME cannot contain forward slash (/)"
+    kill -9 $(ps aux | grep 'sqlservr' | awk '{print $2}')
+    exit -1;
+elif [ $(contains_forward_slash "$DB_USER") == "true" ]; then
+    echo "Error: DB_USER cannot contain forward slash (/)"
+    kill -9 $(ps aux | grep 'sqlservr' | awk '{print $2}')
+    exit -1;
+elif [ $(contains_forward_slash "$DB_PASSWORD") == "true" ]; then
+    echo "Error: DB_PASSWORD cannot contain forward slash (/)"
+    kill -9 $(ps aux | grep 'sqlservr' | awk '{print $2}')
+    exit -1;
+fi
 
 sed -i "s/__DB_KEY_ENCRYPTION_PASSWORD__/$DB_KEY_ENCRYPTION_PASSWORD/g" init.sql
 sed -i "s/__DB_NAME__/$DB_NAME/g" init.sql
+sed -i "s/__DB_USER__/$DB_USER/g" init.sql
+sed -i "s/__DB_PASSWORD__/$DB_PASSWORD/g" init.sql
 
 echo "Logging in to Azure"
 az login --service-principal \

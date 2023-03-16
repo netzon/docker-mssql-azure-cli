@@ -32,6 +32,8 @@ Example content of an `.env` file:
 MSSQL_SA_PASSWORD="p@ssw0rd!"
 ACCEPT_EULA="Y"
 DB_NAME="myapplicationdb"
+DB_USER="some_user"
+DB_PASSWORD="user_p@ssw0rd!"
 DB_KEY_ENCRYPTION_PASSWORD="p@ssw0rd!"
 AZ_PASSWORD="client-secret"
 AZ_USERNAME="app-client-id"

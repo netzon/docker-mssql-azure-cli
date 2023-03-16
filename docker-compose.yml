@@ -12,6 +12,8 @@ services:
       MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?error}
       ACCEPT_EULA: ${ACCEPT_EULA:?error}
       DB_NAME: ${DB_NAME:?error}
+      DB_USER: ${DB_USER:?error}
+      DB_PASSWORD: ${DB_PASSWORD:?error}
       DB_KEY_ENCRYPTION_PASSWORD: ${DB_KEY_ENCRYPTION_PASSWORD:?error}
       AZ_PASSWORD: ${AZ_PASSWORD:?error}
       AZ_USERNAME: ${AZ_USERNAME:?error}
