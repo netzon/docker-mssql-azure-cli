@@ -1,0 +1,31 @@
+version: "3.2"
+services:
+
+  mssql:
+    container_name: mssql-azure-cli
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?error}
+      ACCEPT_EULA: ${ACCEPT_EULA:?error}
+      DB_NAME: ${DB_NAME:?error}
+      DB_KEY_ENCRYPTION_PASSWORD: ${DB_KEY_ENCRYPTION_PASSWORD:?error}
+      AZ_PASSWORD: ${AZ_PASSWORD:?error}
+      AZ_USERNAME: ${AZ_USERNAME:?error}
+      AZ_TENANT: ${AZ_TENANT:?error}
+    volumes:
+      - type: volume
+        source: data
+        target: /var/opt/mssql
+    healthcheck:
+        test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -Q "SELECT 1" || exit 1
+        interval: 10s
+        timeout: 3s
+        retries: 10
+        start_period: 10s
+
+volumes:
+  data:
