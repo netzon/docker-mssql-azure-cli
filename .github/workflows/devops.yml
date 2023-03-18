@@ -31,5 +31,5 @@ jobs:
         with:
           context: .
           push: true
-          platforms: linux/arm,linux/arm64,linux/amd64,linux/arm64/v8
+          platforms: linux/arm,linux/arm64,linux/amd64
           tags: netzon/mssql-azure-cli:mssql-2022-azure-cli-2.46
