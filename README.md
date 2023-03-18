@@ -5,7 +5,16 @@ __Warning: This is not a production-ready solution. It is intended for developme
 Building the image.
 
 ```bash
+# Basic Builds
 docker build -t "netzon/mssql-azure-cli:mssql-2022-azure-cli-2.46" .
+
+# Building for M1 Macs
+docker build --platform linux/amd64 -t "netzon/mssql-azure-cli:mssql-2022-azure-cli-2.46" .
+
+# Alternative way to make builds https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
+docker buildx build --push \
+    --platform linux/arm,linux/arm64,linux/amd64 \
+    --tag "netzon/mssql-azure-cli:mssql-2022-azure-cli-2.46" .
 ```
 
 Running as a docker compose project.
